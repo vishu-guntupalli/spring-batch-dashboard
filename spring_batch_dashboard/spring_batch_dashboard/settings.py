@@ -76,12 +76,7 @@ WSGI_APPLICATION = 'spring_batch_dashboard.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.oracle',
-        'NAME': 'VUDWDEV',
-        'USER': 'erp_conv',
-        'PASSWORD': 'erp_conv89',
-        'HOST': 'dbu83ld.it.vanderbilt.edu',
-        'PORT': '30000',
+
     }
 }
 
