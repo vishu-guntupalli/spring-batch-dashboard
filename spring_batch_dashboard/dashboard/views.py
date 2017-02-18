@@ -10,8 +10,17 @@ __batch_exec_sql__ = 'select bi.job_name,be.start_time,be.end_time,be.status,bp.
                    'inner join batch_step_execution se on (be.job_execution_id=se.job_execution_id)  ' \
                    'order by bi.job_name, be.start_time'
 
+__batch_resultset__ = ('jobName', 'jobStartTime', 'jobEndTime', 'jobStatus', 'keyName', 'keyDateValue', 'stepName',
+                       'stepStartTime','stepEndTime','stepStatus','stepReadCount','stepWriteCount','stepFilterCount',
+                       'stepCommitCount')
+
 def dashboard(request):
+    results = []
     with connection.cursor() as cursor:
         cursor.execute(__batch_exec_sql__)
-        row = cursor.fetchall()
-    return render(request, 'templates/index.html', {'all_jobs': row})
+        rows = cursor.fetchall()
+    for row in rows:
+        rowsDict = dict(zip(__batch_resultset__,row))
+        results.append(rowsDict)
+
+    return render(request, 'templates/index.html', {'all_jobs': results})

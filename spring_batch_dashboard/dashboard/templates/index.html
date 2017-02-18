@@ -7,10 +7,10 @@
 <body>
 
     <p>
-        {% if all_jobs.batchjobinstance %}
+        {% if all_jobs %}
             {% for job in all_jobs %}
                 <ul>
-                    <li>{{ job.job_name }}</li>
+                    <li>{{ job.jobName }}</li>
                 </ul>
             {% endfor %}
         {% else %}
