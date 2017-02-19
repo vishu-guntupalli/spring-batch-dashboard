@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
-<body>
+<body class="jumbotron">
     {# Load the tag library #}
     {% load bootstrap3 %}
 
@@ -14,38 +15,46 @@
 
     {# Display django.contrib.messages as Bootstrap alerts #}
     {% bootstrap_messages %}
+    <h1>Spring Batch Dashboard</h1>
 
-    <div class="jumbotron">
-        <h1>Spring Batch Dashboard</h1>
+    <div>
         <p>
             {% if all_jobs %}
                 {% for job in all_jobs %}
-                    <div>
-                        <ul>
-                            <li>Job Name: {{ job.jobName }}</li>
-                            {% for jobInstance in job.jobInstances %}
-                                <ul>
-                                    <li>Job Instance Id: {{jobInstance.jobInstanceId}}</li>
-                                    <li>Job Start Time: {{jobInstance.jobStartTime}}</li>
-                                    <li>Job End Time: {{jobInstance.jobEndTime}}</li>
-                                    <li>Job Status: {{jobInstance.jobStatus}}</li>
-                                    <li>Key Name: {{jobInstance.keyName}}</li>
-                                    <li>Key Value: {{jobInstance.keyDateValue}}</li>
-                                    {% for jobStep in jobInstance.jobSteps %}
-                                    <ul>
-                                        <li>Step Name: {{jobStep.stepName}}</li>
-                                        <li>Step Start Time: {{jobStep.stepStartTime}}</li>
-                                        <li>Step End TIme: {{jobStep.stepEndTime}}</li>
-                                        <li>Step Status: {{jobStep.stepStatus}}</li>
-                                        <li>Step Read Count: {{jobStep.stepReadCount}}</li>
-                                        <li>Step Write Count: {{jobStep.stepWriteCount}}</li>
-                                        <li>Step Filter Count: {{jobStep.stepFilterCount}}</li>
-                                        <li>Step Commit Count: {{jobStep.stepCommitCount}}</li>
-                                    </ul>
+                    <div class="panel-group" id="accordion{{forloop.counter}}" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="heading{{forloop.counter}}">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion{{forloop.counter}}" href="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapse{{forloop.counter}}">
+                                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Job Name: {{ job.jobName }}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse{{forloop.counter}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{forloop.counter}}">
+                                <div class="panel-body">
+                                    {% for jobInstance in job.jobInstances %}
+                                        <li>Job Instance Id: {{jobInstance.jobInstanceId}}</li>
+                                        <li>Job Start Time: {{jobInstance.jobStartTime}}</li>
+                                        <li>Job End Time: {{jobInstance.jobEndTime}}</li>
+                                        <li>Job Status: {{jobInstance.jobStatus}}</li>
+                                        <li>Key Name: {{jobInstance.keyName}}</li>
+                                        <li>Key Value: {{jobInstance.keyDateValue}}</li>
+                                        {% for jobStep in jobInstance.jobSteps %}
+                                        <ul>
+                                            <li>Step Name: {{jobStep.stepName}}</li>
+                                            <li>Step Start Time: {{jobStep.stepStartTime}}</li>
+                                            <li>Step End TIme: {{jobStep.stepEndTime}}</li>
+                                            <li>Step Status: {{jobStep.stepStatus}}</li>
+                                            <li>Step Read Count: {{jobStep.stepReadCount}}</li>
+                                            <li>Step Write Count: {{jobStep.stepWriteCount}}</li>
+                                            <li>Step Filter Count: {{jobStep.stepFilterCount}}</li>
+                                            <li>Step Commit Count: {{jobStep.stepCommitCount}}</li>
+                                        </ul>
+                                        {% endfor %}
                                     {% endfor %}
-                                </ul>
-                            {% endfor %}
-                        </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 {% endfor %}
             {% else %}
