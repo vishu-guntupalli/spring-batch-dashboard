@@ -5,18 +5,53 @@
     <title>Dashboard</title>
 </head>
 <body>
+    {# Load the tag library #}
+    {% load bootstrap3 %}
 
-    <p>
-        {% if all_jobs %}
-            {% for job in all_jobs %}
-                <ul>
-                    <li>{{ job.jobName }}</li>
-                </ul>
-            {% endfor %}
-        {% else %}
-            <p>No jobs were run.</p>
-        {% endif %}
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 
-    </p>
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+
+    <div class="jumbotron">
+        <h1>Spring Batch Dashboard</h1>
+        <p>
+            {% if all_jobs %}
+                {% for job in all_jobs %}
+                    <div>
+                        <ul>
+                            <li>Job Name: {{ job.jobName }}</li>
+                            {% for jobInstance in job.jobInstances %}
+                                <ul>
+                                    <li>Job Instance Id: {{jobInstance.jobInstanceId}}</li>
+                                    <li>Job Start Time: {{jobInstance.jobStartTime}}</li>
+                                    <li>Job End Time: {{jobInstance.jobEndTime}}</li>
+                                    <li>Job Status: {{jobInstance.jobStatus}}</li>
+                                    <li>Key Name: {{jobInstance.keyName}}</li>
+                                    <li>Key Value: {{jobInstance.keyDateValue}}</li>
+                                    {% for jobStep in jobInstance.jobSteps %}
+                                    <ul>
+                                        <li>Step Name: {{jobStep.stepName}}</li>
+                                        <li>Step Start Time: {{jobStep.stepStartTime}}</li>
+                                        <li>Step End TIme: {{jobStep.stepEndTime}}</li>
+                                        <li>Step Status: {{jobStep.stepStatus}}</li>
+                                        <li>Step Read Count: {{jobStep.stepReadCount}}</li>
+                                        <li>Step Write Count: {{jobStep.stepWriteCount}}</li>
+                                        <li>Step Filter Count: {{jobStep.stepFilterCount}}</li>
+                                        <li>Step Commit Count: {{jobStep.stepCommitCount}}</li>
+                                    </ul>
+                                    {% endfor %}
+                                </ul>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No jobs were run.</p>
+            {% endif %}
+        </p>
+    </div>
 </body>
 </html>
