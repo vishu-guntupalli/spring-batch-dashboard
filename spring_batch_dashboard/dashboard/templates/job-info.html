@@ -1,0 +1,17 @@
+<li>Job Start Time: {{jobInstance.jobStartTime}}</li>
+<li>Job End Time: {{jobInstance.jobEndTime}}</li>
+<li>Job Status: {{jobInstance.jobStatus}}</li>
+<li>Key Name: {{jobInstance.keyName}}</li>
+<li>Key Value: {{jobInstance.keyDateValue}}</li>
+{% for jobStep in jobInstance.jobSteps %}
+<ul>
+    <li>Step Name: {{jobStep.stepName}}</li>
+    <li>Step Start Time: {{jobStep.stepStartTime}}</li>
+    <li>Step End TIme: {{jobStep.stepEndTime}}</li>
+    <li>Step Status: {{jobStep.stepStatus}}</li>
+    <li>Step Read Count: {{jobStep.stepReadCount}}</li>
+    <li>Step Write Count: {{jobStep.stepWriteCount}}</li>
+    <li>Step Filter Count: {{jobStep.stepFilterCount}}</li>
+    <li>Step Commit Count: {{jobStep.stepCommitCount}}</li>
+</ul>
+{% endfor %}

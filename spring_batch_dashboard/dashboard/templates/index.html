@@ -1,22 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Spring-Batch-Dashboard</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
     <h1>Spring Batch Dashboard</h1>
-    {# Load the tag library #}
-    {% load bootstrap3 %}
-
-    {# Load CSS and JavaScript #}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-
-    {# Display django.contrib.messages as Bootstrap alerts #}
-    {% bootstrap_messages %}
-
     <div class="jumbotron">
         <p>
             {% if all_jobs %}
@@ -44,23 +28,7 @@
                                                 </div>
                                                 <div id="collapse-inner{{forloop.parentloop.counter}}{{forloop.counter}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-inner{{forloop.parentloop.counter}}{{forloop.counter}}">
                                                     <div class="panel-body">
-                                                        <li>Job Start Time: {{jobInstance.jobStartTime}}</li>
-                                                        <li>Job End Time: {{jobInstance.jobEndTime}}</li>
-                                                        <li>Job Status: {{jobInstance.jobStatus}}</li>
-                                                        <li>Key Name: {{jobInstance.keyName}}</li>
-                                                        <li>Key Value: {{jobInstance.keyDateValue}}</li>
-                                                        {% for jobStep in jobInstance.jobSteps %}
-                                                        <ul>
-                                                            <li>Step Name: {{jobStep.stepName}}</li>
-                                                            <li>Step Start Time: {{jobStep.stepStartTime}}</li>
-                                                            <li>Step End TIme: {{jobStep.stepEndTime}}</li>
-                                                            <li>Step Status: {{jobStep.stepStatus}}</li>
-                                                            <li>Step Read Count: {{jobStep.stepReadCount}}</li>
-                                                            <li>Step Write Count: {{jobStep.stepWriteCount}}</li>
-                                                            <li>Step Filter Count: {{jobStep.stepFilterCount}}</li>
-                                                            <li>Step Commit Count: {{jobStep.stepCommitCount}}</li>
-                                                        </ul>
-                                                        {% endfor %}
+                                                        {% include "job-info.html" %}
                                                     </div>
                                                 </div>
                                             </div>
@@ -76,5 +44,4 @@
             {% endif %}
         </p>
     </div>
-</body>
-</html>
+{% endblock %}
