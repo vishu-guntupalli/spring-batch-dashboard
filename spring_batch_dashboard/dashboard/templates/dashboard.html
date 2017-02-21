@@ -9,7 +9,8 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="heading{{forloop.counter}}">
                                 <h4 class="panel-title">
-                                    <a role="button" data-toggle="collapse" data-parent="#accordion{{forloop.counter}}" href="#collapse{{forloop.counter}}" aria-expanded="true" aria-controls="collapse{{forloop.counter}}">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion{{forloop.counter}}" href="#collapse{{forloop.counter}}" aria-expanded="true"
+                                       aria-controls="collapse{{forloop.counter}}">
                                         <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Job Name: {{ job.jobName }}
                                     </a>
                                 </h4>
@@ -21,12 +22,15 @@
                                             <div class="panel panel-default">
                                                 <div class="panel-heading" role="tab" id="heading-inner{{forloop.parentloop.counter}}{{forloop.counter}}">
                                                     <h4 class="panel-title">
-                                                        <a role="button" data-toggle="collapse" data-parent="#accordion-inner{{forloop.parentloop.counter}}{{forloop.counter}}" href="#collapse-inner{{forloop.parentloop.counter}}{{forloop.counter}}" aria-expanded="true" aria-controls="collapse-inner{{forloop.parentloop.counter}}{{forloop.counter}}">
+                                                        <a role="button" data-toggle="collapse" data-parent="#accordion-inner{{forloop.parentloop.counter}}{{forloop.counter}}"
+                                                           href="#collapse-inner{{forloop.parentloop.counter}}{{forloop.counter}}" aria-expanded="true"
+                                                           aria-controls="collapse-inner{{forloop.parentloop.counter}}{{forloop.counter}}">
                                                             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span> Job Instance Id: {{jobInstance.jobInstanceId}}
                                                         </a>
                                                     </h4>
                                                 </div>
-                                                <div id="collapse-inner{{forloop.parentloop.counter}}{{forloop.counter}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-inner{{forloop.parentloop.counter}}{{forloop.counter}}">
+                                                <div id="collapse-inner{{forloop.parentloop.counter}}{{forloop.counter}}" class="panel-collapse collapse" role="tabpanel"
+                                                     aria-labelledby="heading-inner{{forloop.parentloop.counter}}{{forloop.counter}}">
                                                     <div class="panel-body">
                                                         {% include "job-info.html" %}
                                                     </div>
