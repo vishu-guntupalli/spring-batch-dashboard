@@ -1,41 +1,51 @@
 from django.shortcuts import render
-from .models import *
 from django.db import connection
-
-
-__batch_exec_sql__ = 'select bi.job_name,bi.job_instance_id,be.start_time,be.end_time,be.status,bp.key_name,bp.date_val, se.step_name,se.start_time,' \
-                   'se.end_time,se.status,se.read_count,se.write_count,se.filter_count,se.commit_count ' \
-                   'from batch_job_instance bi ' \
-                   'inner join batch_job_execution be on (bi.job_instance_id = be.job_instance_id) ' \
-                   'inner join batch_job_execution_params bp on (be.job_execution_id=bp.job_execution_id) ' \
-                   'inner join batch_step_execution se on (be.job_execution_id=se.job_execution_id)  ' \
-                   'order by bi.job_name, bi.job_instance_id'
+from spring_batch_dashboard.dashboard import batch_sql
 
 __batch_exec_result_set__ = ('jobName', 'jobInstanceId', 'jobStartTime', 'jobEndTime', 'jobStatus', 'keyName', 'keyDateValue', 'stepName',
                              'stepStartTime','stepEndTime','stepStatus','stepReadCount','stepWriteCount','stepFilterCount',
                              'stepCommitCount')
 
-__most_run_job_sql__ = 'select job_name from batch_job_instance ' \
-                       'group by job_name having count(job_name) = (select max(count(job_name)) ' \
-                       'from batch_job_instance group by job_name)'
+__job_run_result_set__ = ('jobName')
 
-__most_run_job_result_set__ = ('jobName')
+__job_success_failure_result_set__ = ('jobName', 'totalCount', 'failedCount', 'succeededCount')
+
+def job_success_failure_ratio(request):
+    job_success_failure_results = []
+    job_success_failure_rows = __run_query__(batch_sql.__job_success_failure_sql__)
+
+    for job_success_failure_row in job_success_failure_rows:
+        job_success_failure_dict = dict(zip(__job_success_failure_result_set__, job_success_failure_row))
+        job_success_failure_results.append(job_success_failure_dict)
+
+    return job_success_failure_results
 
 def most_run_job(request):
     most_run_job_results = []
-    most_run_job_rows = __run_query__(__most_run_job_sql__)
+    most_run_job_rows = __run_query__(batch_sql.__most_run_job_sql__)
 
     for most_run_job_result in most_run_job_rows:
-        most_run_job_dict = dict(zip(__most_run_job_result_set__,most_run_job_result))
+        most_run_job_dict = dict(zip(__job_run_result_set__, most_run_job_result))
         most_run_job_results.append(most_run_job_dict)
 
     return most_run_job_results
+
+def least_run_job(request):
+    least_run_job_results = []
+    least_run_job_rows = __run_query__(batch_sql.__least_run_job_sql__)
+
+    for least_run_job_result in least_run_job_rows:
+        least_run_job_dict = dict(zip(__job_run_result_set__, least_run_job_result))
+        least_run_job_results.append(least_run_job_dict)
+
+    return least_run_job_results
+
 
 
 def dashboard(request):
     results = []
     formatted_results = []
-    rows = __run_query__(__batch_exec_sql__)
+    rows = __run_query__(batch_sql.__batch_exec_sql__)
 
     for result_2 in rows:
         rowsDict = dict(zip(__batch_exec_result_set__, result_2))
