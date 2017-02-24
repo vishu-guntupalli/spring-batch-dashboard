@@ -11,20 +11,34 @@ __batch_exec_sql__ = 'select bi.job_name,bi.job_instance_id,be.start_time,be.end
                    'inner join batch_step_execution se on (be.job_execution_id=se.job_execution_id)  ' \
                    'order by bi.job_name, bi.job_instance_id'
 
-__batch_result_set__ = ('jobName', 'jobInstanceId', 'jobStartTime', 'jobEndTime', 'jobStatus', 'keyName', 'keyDateValue', 'stepName',
-                       'stepStartTime','stepEndTime','stepStatus','stepReadCount','stepWriteCount','stepFilterCount',
-                       'stepCommitCount')
+__batch_exec_result_set__ = ('jobName', 'jobInstanceId', 'jobStartTime', 'jobEndTime', 'jobStatus', 'keyName', 'keyDateValue', 'stepName',
+                             'stepStartTime','stepEndTime','stepStatus','stepReadCount','stepWriteCount','stepFilterCount',
+                             'stepCommitCount')
+
+__most_run_job_sql__ = 'select job_name from batch_job_instance ' \
+                       'group by job_name having count(job_name) = (select max(count(job_name)) ' \
+                       'from batch_job_instance group by job_name)'
+
+__most_run_job_result_set__ = ('jobName')
+
+def most_run_job(request):
+    most_run_job_results = []
+    most_run_job_rows = __run_query__(__most_run_job_sql__)
+
+    for most_run_job_result in most_run_job_rows:
+        most_run_job_dict = dict(zip(__most_run_job_result_set__,most_run_job_result))
+        most_run_job_results.append(most_run_job_dict)
+
+    return most_run_job_results
 
 
 def dashboard(request):
     results = []
     formatted_results = []
-    with connection.cursor() as cursor:
-        cursor.execute(__batch_exec_sql__)
-        rows = cursor.fetchall()
+    rows = __run_query__(__batch_exec_sql__)
 
     for result_2 in rows:
-        rowsDict = dict(zip(__batch_result_set__, result_2))
+        rowsDict = dict(zip(__batch_exec_result_set__, result_2))
         results.append(rowsDict)
 
     for result_1 in results:
@@ -46,18 +60,18 @@ def dashboard(request):
                             if jobInstanceRow['jobInstanceId'] == result_2['jobInstanceId']:
                                 job_instance_present = True
                     if not job_instance_present:
-                        build_job_instance(job_instance, result_2)
+                        __build_job_instance__(job_instance, result_2)
                         for result_3 in results:
                             if (result_3['jobName'] == result_2['jobName']) and (
                                         result_2['jobInstanceId'] == result_3['jobInstanceId']):
-                                job_step = build_job_step(result_3)
+                                job_step = __build_job_step__(result_3)
                                 job_instance['jobSteps'].append(job_step)
                         job_object['jobInstances'].append(job_instance)
             formatted_results.append(job_object)
     return render(request, 'templates/dashboard.html', {'all_jobs': formatted_results})
 
 
-def build_job_step(result_3):
+def __build_job_step__(result_3):
     job_step = {}
     job_step['stepName'] = result_3['stepName']
     job_step['stepStartTime'] = result_3['stepStartTime']
@@ -70,7 +84,7 @@ def build_job_step(result_3):
     return job_step
 
 
-def build_job_instance(job_instance, result_2):
+def __build_job_instance__(job_instance, result_2):
     job_instance['jobInstanceId'] = result_2['jobInstanceId']
     job_instance['jobStartTime'] = result_2['jobStartTime']
     job_instance['jobEndTime'] = result_2['jobEndTime']
@@ -78,3 +92,9 @@ def build_job_instance(job_instance, result_2):
     job_instance['keyName'] = result_2['keyName']
     job_instance['keyDateValue'] = result_2['keyDateValue']
     job_instance['jobSteps'] = []
+
+def __run_query__(sql_query):
+    with connection.cursor() as cursor:
+        cursor.execute(sql_query)
+        rows = cursor.fetchall()
+    return rows
