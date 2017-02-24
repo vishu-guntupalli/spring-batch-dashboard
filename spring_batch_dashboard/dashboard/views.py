@@ -48,7 +48,7 @@ def least_run_job(request):
 
 
 
-def dashboard(request):
+def job_meta(request):
     results = []
     formatted_results = []
     rows = __run_query__(batch_sql.__batch_exec_sql__)
@@ -84,7 +84,7 @@ def dashboard(request):
                                 job_instance['jobSteps'].append(job_step)
                         job_object['jobInstances'].append(job_instance)
             formatted_results.append(job_object)
-    return render(request, 'templates/dashboard.html', {'all_jobs': formatted_results})
+    return render(request, 'templates/job-meta.html', {'all_jobs': formatted_results})
 
 
 def __build_job_step__(result_3):
