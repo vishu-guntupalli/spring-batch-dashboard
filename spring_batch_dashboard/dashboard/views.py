@@ -10,6 +10,12 @@ __job_run_result_set__ = ('jobName')
 
 __job_success_failure_result_set__ = ('jobName', 'totalCount', 'failedCount', 'succeededCount')
 
+__total_time_ran_result_set__ = ('days', 'hours', 'minutes', 'seconds')
+
+def total_time_ran(request):
+    total_time_ran_result = __run_query__(batch_sql.__total_time_ran_sql__)
+    return dict(zip(__total_time_ran_result_set__, total_time_ran_result[0]))
+
 def job_success_failure_ratio(request):
     job_success_failure_results = []
     job_success_failure_rows = __run_query__(batch_sql.__job_success_failure_sql__)

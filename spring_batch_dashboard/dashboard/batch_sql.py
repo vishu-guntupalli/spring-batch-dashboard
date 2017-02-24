@@ -39,3 +39,17 @@ __job_success_failure_sql__ = 'with total_times as ' \
                                 'from total_times total ' \
                                 'inner join times_failed failed on (total.job_name=failed.job_name) ' \
                                 'inner join times_succeeded succeeded on (total.job_name=succeeded.job_name)'
+
+__total_time_ran_sql__ = 'with total_time_ran as ' \
+                         '( ' \
+                         'select numtodsinterval( ' \
+                         'sum( extract(day from (end_time-start_time)) * 86400 + ' \
+                              'extract(hour from (end_time-start_time)) * 3600 + ' \
+                              'extract(minute from (end_time-start_time)) * 60 + ' \
+                              'extract(second from (end_time-start_time)) ), ''SECOND'') as total_time ' \
+                         'from batch_job_execution ' \
+                         ') ' \
+                         'select extract(day from total_time) as days, ' \
+                         'extract(hour from total_time) as hours, ' \
+                         'extract(minute from total_time) as minutes, ' \
+                         'extract(second from total_time) as seconds from total_time_ran'
