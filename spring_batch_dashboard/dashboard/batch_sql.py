@@ -46,7 +46,7 @@ __total_time_ran_sql__ = 'with total_time_ran as ' \
                          'sum( extract(day from (end_time-start_time)) * 86400 + ' \
                               'extract(hour from (end_time-start_time)) * 3600 + ' \
                               'extract(minute from (end_time-start_time)) * 60 + ' \
-                              'extract(second from (end_time-start_time)) ), ''SECOND'') as total_time ' \
+                              "extract(second from (end_time-start_time)) ), 'SECOND') as total_time " \
                          'from batch_job_execution ' \
                          ') ' \
                          'select extract(day from total_time) as days, ' \

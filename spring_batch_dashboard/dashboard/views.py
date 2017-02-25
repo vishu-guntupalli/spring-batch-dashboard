@@ -6,7 +6,7 @@ __batch_exec_result_set__ = ('jobName', 'jobInstanceId', 'jobStartTime', 'jobEnd
                              'stepStartTime','stepEndTime','stepStatus','stepReadCount','stepWriteCount','stepFilterCount',
                              'stepCommitCount')
 
-__job_run_result_set__ = ('jobName')
+__job_run_result_set__ = ('jobName', '')
 
 __job_success_failure_result_set__ = ('jobName', 'totalCount', 'failedCount', 'succeededCount')
 
@@ -45,6 +45,19 @@ def least_run_job(request):
         least_run_job_results.append(least_run_job_dict)
 
     return least_run_job_results
+
+def dashboard(request):
+
+    totalTimeRan = total_time_ran(request)
+    mostRunJob = most_run_job(request)
+    leastRunJob = least_run_job(request)
+
+    dashboard = {}
+    dashboard['totalTimeRan'] = totalTimeRan
+    dashboard['mostRunJob'] = mostRunJob[0]
+    dashboard['leastRunJob'] = leastRunJob[0]
+
+    return render(request, 'templates/dashboard.html', {'dashboard' : dashboard})
 
 
 
