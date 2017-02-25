@@ -25,14 +25,14 @@ __job_success_failure_sql__ = 'with total_times as ' \
                                 'select i1.job_name as job_name, count(i1.job_name) as job_count ' \
                                 'from batch_job_instance i1 ' \
                                 'inner join batch_job_execution e1 on (i1.job_instance_id=e1.job_instance_id) ' \
-                                'where e1.status=''FAILED'' group by i1.job_name ' \
+                                "where e1.status='FAILED' group by i1.job_name " \
                                 '), ' \
                                 'times_succeeded as ' \
                                 '( ' \
                                 'select i1.job_name as job_name, count(i1.job_name) as job_count ' \
                                 'from batch_job_instance i1 ' \
                                 'inner join batch_job_execution e1 on (i1.job_instance_id=e1.job_instance_id) ' \
-                                'where e1.status=''COMPLETED'' ' \
+                                "where e1.status='COMPLETED' " \
                                 'group by i1.job_name ' \
                                 ') ' \
                                 'select total.job_name, total.job_count as total_times, failed.job_count as failed, succeeded.job_count as succeeded ' \

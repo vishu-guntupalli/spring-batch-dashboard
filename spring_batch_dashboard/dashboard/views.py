@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.db import connection
 from spring_batch_dashboard.dashboard import batch_sql
+from django.http import JsonResponse
 
 __batch_exec_result_set__ = ('jobName', 'jobInstanceId', 'jobStartTime', 'jobEndTime', 'jobStatus', 'keyName', 'keyDateValue', 'stepName',
                              'stepStartTime','stepEndTime','stepStatus','stepReadCount','stepWriteCount','stepFilterCount',
@@ -24,7 +25,7 @@ def job_success_failure_ratio(request):
         job_success_failure_dict = dict(zip(__job_success_failure_result_set__, job_success_failure_row))
         job_success_failure_results.append(job_success_failure_dict)
 
-    return job_success_failure_results
+    return JsonResponse(job_success_failure_results, safe=False)
 
 def most_run_job(request):
     most_run_job_results = []
@@ -58,7 +59,6 @@ def dashboard(request):
     dashboard['leastRunJob'] = leastRunJob[0]
 
     return render(request, 'templates/dashboard.html', {'dashboard' : dashboard})
-
 
 
 def job_meta(request):
