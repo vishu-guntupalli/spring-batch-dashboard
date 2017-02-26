@@ -37,8 +37,8 @@ __job_success_failure_sql__ = 'with total_times as ' \
                                 ') ' \
                                 'select total.job_name, total.job_count as total_times, failed.job_count as failed, succeeded.job_count as succeeded ' \
                                 'from total_times total ' \
-                                'inner join times_failed failed on (total.job_name=failed.job_name) ' \
-                                'inner join times_succeeded succeeded on (total.job_name=succeeded.job_name)'
+                                'left outer join times_failed failed on (total.job_name=failed.job_name) ' \
+                                'left outer join times_succeeded succeeded on (total.job_name=succeeded.job_name)'
 
 __total_time_ran_sql__ = 'with total_time_ran as ' \
                          '( ' \
