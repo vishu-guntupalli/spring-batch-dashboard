@@ -27,10 +27,17 @@
         </div>
     </div>
 </div>
-
-<svg height="700" width="1100"></svg>
+<div id="grafix" class="row col-lg-12">
+    <div class="col-lg-9" id="barg">
+        <svg height="700" width="1100"></svg>
+    </div>
+    <div class="col-lg-3" id="pieg">
+        <svg height="250" width="250"></svg>
+    </div>
+</div>
 {% load static %}
 <script src="{% static 'd3-tip.js' %}" ></script>
 <script src="{% static 'barchart.js' %}" ></script>
+<script src="{% static 'piechart.js' %}" ></script>
 
 {% endblock %}
