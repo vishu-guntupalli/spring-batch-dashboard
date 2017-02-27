@@ -50,6 +50,8 @@ d3.json("/dashboard/job-success-failure", function(error, data) {
       .attr("y", function(d) { return y(d.totalCount); })
       .attr("width", x.bandwidth())
       .attr("height", function(d) { return height - y(d.totalCount); })
-      .on('mouseover', tip.show)
+      .on('mouseover', function(d){
+        tip.show(d)
+      })
       .on('mouseout', tip.hide);
 });
