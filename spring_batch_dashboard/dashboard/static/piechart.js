@@ -37,10 +37,14 @@ var renderPie = function(data) {
 
   g.append("path")
       .attr("d", pieArc)
-      .style("fill", '#8a89a6' );
+      .style("fill", color(data.succeededCount));
 
   g.append("text")
-      .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+      .attr("transform", function(data) { return "translate(" + labelArc.centroid(data) + ")"; })
       .attr("dy", ".35em")
-      .text(function(d) { return d.succeededCount; });
+      .text(function(d) { return data.succeededCount; });
+}
+
+var removePie = function(data) {
+    svg.selectAll(".arc").remove()
 }
