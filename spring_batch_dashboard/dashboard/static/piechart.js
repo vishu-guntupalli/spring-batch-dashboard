@@ -18,7 +18,7 @@ var labelArc = d3.arc()
 
 var pie = d3.pie()
     .sort(null)
-    .value(function(d) { return d.totalCount; });
+    .value(function(d) { return d.count; });
 
 var svg = d3.select("#pieg").select("svg")
     .attr("pieWidth", pieWidth)
@@ -27,11 +27,17 @@ var svg = d3.select("#pieg").select("svg")
     .attr("transform", "translate(" + pieWidth / 2 + "," + pieHeight / 2 + ")");
 
 var renderPie = function(data) {
+    var fcount = data.failedCount == null ? 0 : data.failedCount;
+
     var g = svg.selectAll(".arc")
-      .data(pie(data))
+      .data(pie([{'jobName' : data.jobName, 'count': data.succeededCount},
+                 {'jobName' : data.jobName, 'count': fcount}]))
       .enter().append("g")
       .attr("class", "arc");
 
+  g.append("path")
+      .attr("d", pieArc)
+      .style("fill", '#8a89a6' );
 
   g.append("text")
       .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
