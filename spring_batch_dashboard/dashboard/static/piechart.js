@@ -6,7 +6,8 @@ var pieWidth = 250,
     pieHeight = 250,
     radius = Math.min(pieWidth, pieHeight) / 2;
 
-var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+var successColor = d3.rgb("#6fff84")
+var failureColor = d3.rgb("#ff0433")
 
 var pieArc = d3.arc()
     .outerRadius(radius - 10)
@@ -28,21 +29,26 @@ var svg = d3.select("#pieg").select("svg")
 
 var renderPie = function(data) {
     var fcount = data.failedCount == null ? 0 : data.failedCount;
+    var formattedData = [{'jobName' : data.jobName, 'count': data.succeededCount, 'label': 'success'},
+                         {'jobName' : data.jobName, 'count': fcount, 'label': 'failure'}]
 
     var g = svg.selectAll(".arc")
-      .data(pie([{'jobName' : data.jobName, 'count': data.succeededCount},
-                 {'jobName' : data.jobName, 'count': fcount}]))
+      .data(pie(formattedData))
       .enter().append("g")
       .attr("class", "arc");
 
   g.append("path")
       .attr("d", pieArc)
-      .style("fill", color(data.succeededCount));
+      .style("fill", function(d){
+                                if (d.data.label=='success')
+                                    return successColor
+                                else
+                                    return failureColor});
 
   g.append("text")
-      .attr("transform", function(data) { return "translate(" + labelArc.centroid(data) + ")"; })
+      .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
       .attr("dy", ".35em")
-      .text(function(d) { return data.succeededCount; });
+      .text(function(d) { return d.data.count; });
 }
 
 var removePie = function(data) {

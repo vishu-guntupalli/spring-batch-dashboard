@@ -52,11 +52,10 @@ d3.json("/dashboard/job-success-failure", function(error, data) {
       .attr("height", function(d) { return height - y(d.totalCount); })
       .on('mouseover', function(d){
         tip.show(d);
-        removePie(d)
+        removePie(d);
         renderPie(d);
       })
       .on('mouseout', function(d){
           tip.hide
-
       });
 });

@@ -38,7 +38,6 @@ def least_run_job(request):
     return least_run_job_results
 
 def dashboard(request):
-
     totalTimeRan = total_time_ran(request)
     mostRunJob = most_run_job(request)
     leastRunJob = least_run_job(request)
