@@ -27,6 +27,9 @@ var svg = d3.select("#pieg").select("svg")
     .append("g")
     .attr("transform", "translate(" + pieWidth / 2 + "," + pieHeight / 2 + ")");
 
+var textSvg = d3.select("#pieg")
+                .select("#jobLabel");
+
 var renderPie = function(data) {
     var fcount = data.failedCount == null ? 0 : data.failedCount;
     var formattedData = [{'jobName' : data.jobName, 'count': data.succeededCount, 'label': 'success'},
@@ -37,7 +40,7 @@ var renderPie = function(data) {
       .enter().append("g")
       .attr("class", "arc");
 
-  g.append("path")
+    g.append("path")
       .attr("d", pieArc)
       .style("fill", function(d){
                                 if (d.data.label=='success')
@@ -45,7 +48,7 @@ var renderPie = function(data) {
                                 else
                                     return failureColor});
 
-  g.append("text")
+    g.append("text")
       .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
       .attr("dy", ".35em")
       .text(function(d) { return d.data.count; });
@@ -53,4 +56,8 @@ var renderPie = function(data) {
 
 var removePie = function(data) {
     svg.selectAll(".arc").remove()
+}
+
+var renderJobName = function(jobName) {
+    textSvg.text(jobName)
 }

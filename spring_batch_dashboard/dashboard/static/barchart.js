@@ -12,15 +12,6 @@ var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
 var g = svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var tip = d3.tip()
-  .attr('class', 'd3-tip')
-  .offset([-10, 0])
-  .html(function(d) {
-    return "<b><span style='color:greenyellow'>" + d.jobName + "</span></b>";
-  });
-
-svg.call(tip);
-
 d3.json("/dashboard/job-success-failure", function(error, data) {
   if (error) throw error;
 
@@ -51,11 +42,11 @@ d3.json("/dashboard/job-success-failure", function(error, data) {
       .attr("width", x.bandwidth())
       .attr("height", function(d) { return height - y(d.totalCount); })
       .on('mouseover', function(d){
-        tip.show(d);
         removePie(d);
         renderPie(d);
+        renderJobName(d.jobName)
       })
       .on('mouseout', function(d){
-          tip.hide
+
       });
 });
