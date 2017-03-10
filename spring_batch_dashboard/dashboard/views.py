@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db import connection
-from spring_batch_dashboard.dashboard.batch_sql import BatchSql
+from .batch_sql import BatchSql
 from django.http import JsonResponse
 
 def total_time_ran(request):

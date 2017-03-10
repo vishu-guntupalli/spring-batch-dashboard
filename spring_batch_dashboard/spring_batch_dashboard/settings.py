@@ -77,6 +77,7 @@ WSGI_APPLICATION = 'spring_batch_dashboard.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
 
     }
 }
