@@ -2,8 +2,8 @@
 
 {% block content %}
 
-{% csrf_token %}
 <form class="form-signin" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
     {% if form.errors %}
     <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
@@ -13,21 +13,21 @@
         <p>Your account doesn't have access to this page. To proceed,
         please login with an account that has access.</p>
         {% else %}
-        <p>Please login to see this page.</p>
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="form.username" class="sr-only">Username</label>
+        <input id="form.username" class="form-control" placeholder="Username" required autofocus>
+        <label for="form.password" class="sr-only">Password</label>
+        <input type="password" id="form.password" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <input type="hidden" name="next" value="{{ next }}" />
         {% endif %}
     {% endif %}
-    <h2 class="form-signin-heading">Please sign in</h2>
-    <label for="form.username" class="sr-only">Username</label>
-    <input type="email" id="form.username" class="form-control" placeholder="Username" required autofocus>
-    <label for="form.password" class="sr-only">Password</label>
-    <input type="password" id="form.password" class="form-control" placeholder="Password" required>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
-    </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    <input type="hidden" name="next" value="{{ next }}" />
+
 
     {# Assumes you setup the password_reset view in your URLconf #}
     <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
