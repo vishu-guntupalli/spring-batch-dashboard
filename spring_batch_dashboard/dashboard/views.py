@@ -2,11 +2,15 @@ from django.shortcuts import render
 from django.db import connection
 from .batch_sql import BatchSql
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
+
+@login_required()
 def total_time_ran(request):
     total_time_ran_result = __run_query__(BatchSql.total_time_ran_sql)
     return dict(zip(BatchSql.total_time_ran_result_set, total_time_ran_result[0]))
 
+@login_required()
 def job_success_failure_ratio(request):
     job_success_failure_results = []
     job_success_failure_rows = __run_query__(BatchSql.job_success_failure_sql)
@@ -17,6 +21,7 @@ def job_success_failure_ratio(request):
 
     return JsonResponse(job_success_failure_results, safe=False)
 
+@login_required()
 def most_run_job(request):
     most_run_job_results = []
     most_run_job_rows = __run_query__(BatchSql.most_run_job_sql)
@@ -27,6 +32,7 @@ def most_run_job(request):
 
     return most_run_job_results
 
+@login_required()
 def least_run_job(request):
     least_run_job_results = []
     least_run_job_rows = __run_query__(BatchSql.least_run_job_sql)
@@ -37,6 +43,7 @@ def least_run_job(request):
 
     return least_run_job_results
 
+@login_required()
 def dashboard(request):
     totalTimeRan = total_time_ran(request)
     mostRunJob = most_run_job(request)
@@ -49,7 +56,7 @@ def dashboard(request):
 
     return render(request, 'templates/dashboard.html', {'dashboard' : dashboard})
 
-
+@login_required()
 def job_meta(request):
     results = []
     formatted_results = []

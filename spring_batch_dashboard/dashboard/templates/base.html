@@ -16,6 +16,9 @@
 
     {# Display django.contrib.messages as Bootstrap alerts #}
     {% bootstrap_messages %}
+
+    {% load static %}
+    <link href="{% static 'signin.css' %}" rel="stylesheet"> </link>
 </head>
 <body>
     {% block content %}
