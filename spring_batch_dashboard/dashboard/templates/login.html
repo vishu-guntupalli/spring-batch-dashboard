@@ -14,14 +14,19 @@
         please login with an account that has access.</p>
         {% else %}
         <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="form.username" class="sr-only">Username</label>
-        <input id="form.username" class="form-control" placeholder="Username" required autofocus>
-        <label for="form.password" class="sr-only">Password</label>
-        <input type="password" id="form.password" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
+        <table>
+            <tr>
+                <td>{{ form.username.label_tag }}</td>
+                <td>{{ form.username }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.password.label_tag }}</td>
+                <td>{{ form.password }}</td>
+            </tr>
+        </table>
+        <label>
             <input type="checkbox" value="remember-me"> Remember me
-          </label>
+        </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <input type="hidden" name="next" value="{{ next }}" />

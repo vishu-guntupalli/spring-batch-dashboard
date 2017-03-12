@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.db import connection
 from .batch_sql import BatchSql
 from django.http import JsonResponse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-
 
 @login_required()
 def total_time_ran(request):
