@@ -16,3 +16,12 @@ class UrlsTest(TestCase):
     def test_job_success_failure(self):
         resolver = resolve('/dashboard/job-success-failure/')
         self.assertEquals(resolver.view_name, 'job_success_failure_ratio')
+
+
+class viewTest(TestCase):
+
+    def test_secure_view(self):
+        c = Client()
+        response = c.get('/dashboard')
+        self.assertEqual(response.status_code, 301)
+

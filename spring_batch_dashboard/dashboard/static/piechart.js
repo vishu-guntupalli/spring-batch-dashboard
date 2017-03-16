@@ -6,7 +6,7 @@ var pieWidth = 250,
     pieHeight = 250,
     radius = Math.min(pieWidth, pieHeight) / 2;
 
-var successColor = d3.rgb("#6fff84")
+var successColor = d3.rgb("#00FA9A")
 var failureColor = d3.rgb("#ff0433")
 
 var pieArc = d3.arc()

@@ -24,11 +24,11 @@
                 <td>{{ form.password }}</td>
             </tr>
         </table>
-        <label>
-            <input type="checkbox" value="remember-me"> Remember me
-        </label>
+        <div style= "text-align: center">
+            <button class="btn btn-sm btn-primary" type="submit">Sign in</button>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </div>
+
         <input type="hidden" name="next" value="{{ next }}" />
         {% endif %}
     {% endif %}
