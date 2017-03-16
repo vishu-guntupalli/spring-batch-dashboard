@@ -44,7 +44,5 @@ body {
 .bar:hover {
   fill: purple;
 }
-.axis--x path {
-  display: none;
-}
+
 
