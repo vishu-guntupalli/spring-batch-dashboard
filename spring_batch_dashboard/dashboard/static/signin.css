@@ -38,3 +38,13 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+.bar {
+  fill: steelblue;
+}
+.bar:hover {
+  fill: purple;
+}
+.axis--x path {
+  display: none;
+}
+
