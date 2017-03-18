@@ -2,28 +2,34 @@
 {% block content %}
 
 <div class="row col-lg-12">
-    <div class="panel panel-primary col-lg-4">
-        <div class="panel-heading">
-            <h3 class="panel-title">Most Run Job</h3>
-        </div>
-        <div class="panel-body">
-            {{ dashboard.mostRunJob.jobName }}
-        </div>
-    </div>
-    <div class="panel panel-primary col-lg-4">
-        <div class="panel-heading">
-            <h3 class="panel-title">Least Run Job</h3>
-        </div>
-        <div class="panel-body">
-            {{ dashboard.leastRunJob.jobName }}
+    <div class="col-lg-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading dash-text ">
+                <h3 class="panel-title">Most Run Job</h3>
+            </div>
+            <div class="panel-body dash-text ">
+                {{ dashboard.mostRunJob.jobName }}
+            </div>
         </div>
     </div>
-    <div class="panel panel-primary col-lg-4">
-        <div class="panel-heading">
-            <h3 class="panel-title">Total Time Ran</h3>
+    <div class="col-lg-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading dash-text ">
+                <h3 class="panel-title">Least Run Job</h3>
+            </div>
+            <div class="panel-body dash-text ">
+                {{ dashboard.leastRunJob.jobName }}
+            </div>
         </div>
-        <div class="panel-body">
-            {{ dashboard.totalTimeRan.hours }} Hours {{ dashboard.totalTimeRan.minutes }} Minutes {{ dashboard.totalTimeRan.seconds }} Seconds
+    </div>
+    <div class="col-lg-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading dash-text ">
+                <h3 class="panel-title">Total Time Ran</h3>
+            </div>
+            <div class="panel-body dash-text ">
+                {{ dashboard.totalTimeRan.hours }} Hours {{ dashboard.totalTimeRan.minutes }} Minutes {{ dashboard.totalTimeRan.seconds }} Seconds
+            </div>
         </div>
     </div>
 </div>
